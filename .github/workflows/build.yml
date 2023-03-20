@@ -1,0 +1,19 @@
+name: build
+
+on:
+  schedule:
+    - cron: "0 22 * * 1"
+  push:
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.REG_USER }}
+          password: ${{ secrets.REG_PASS }}
+      - uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ secrets.REG_USER }}/text2qrcode:latest

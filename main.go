@@ -10,7 +10,10 @@ import (
 )
 
 func main() {
-	docs.SwaggerInfo.Title = "QR-Code Generator"
+	docs.SwaggerInfo.Title = "Text2QRCode / QR-Code Generator"
+	docs.SwaggerInfo.Description =
+		`Ein einfacher Konverter um einen QRCode aus Text zu erstellen.
+		Quellcode unter https://github.com/aimotrens/text2qrcode`
 	docs.SwaggerInfo.BasePath = "/api"
 
 	r := gin.Default()

@@ -63,20 +63,68 @@ func postJson400(qrReq text2qrcode.QRCodeRequest, t *testing.T) {
 	}
 }
 
-func TestHealthcheck_OK(t *testing.T) {
+func get200(url string, t *testing.T) {
 	httpClient := &http.Client{}
-	_, err := httpClient.Get(TestURL + "/api/healthcheck")
+	req, err := httpClient.Get(url)
 	if err != nil {
-		t.Error("Healthcheck failed")
+		t.Error("Request failed", err)
+	}
+
+	if req.StatusCode != http.StatusOK {
+		t.Error("Status Code is not 200, but", req.StatusCode)
+	}
+}
+
+func get400(url string, t *testing.T) {
+	httpClient := &http.Client{}
+	req, err := httpClient.Get(url)
+	if err != nil {
+		t.Error("Request failed", err)
+	}
+
+	if req.StatusCode != http.StatusBadRequest {
+		t.Error("Status Code is not 400, but", req.StatusCode)
 	}
 }
 
 func TestEncodeWithQueryString_OK(t *testing.T) {
-	httpClient := &http.Client{}
-	_, err := httpClient.Get(TestURL + "/api/text2qrcode/encode?text=HelloWorld")
-	if err != nil {
-		t.Error("Request failed", err)
-	}
+	get200(TestURL+"/api/text2qrcode/encode?text=HelloWorld", t)
+}
+
+func TestEncodeWithQueryString_SizeTooLow(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&size=99", t)
+}
+
+func TestEncodeWithQueryString_SizeTooHigh(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&size=1001", t)
+}
+
+func TestEncodeWithQueryString_EclTooLow(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&errorCorrection=-1", t)
+}
+
+func TestEncodeWithQueryString_EclTooHigh(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&errorCorrection=5", t)
+}
+
+func TestEncodeWithQueryString_SizeNotInteger(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&size=abc", t)
+}
+
+func TestEncodeWithQueryString_EclNotInteger(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&errorCorrection=abc", t)
+}
+
+func TestEncodeWithQueryString_EmptyText(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=", t)
+}
+
+func TestEncodeWithQueryString_NoText(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode", t)
+}
+
+func TestEncodeWithQueryString_WhiteBorderNotBool(t *testing.T) {
+	get400(TestURL+"/api/text2qrcode/encode?text=HelloWorld&whiteBorder=abc", t)
 }
 
 func TestEncode_OK(t *testing.T) {
@@ -127,4 +175,34 @@ func TestEncode_EclTooHigh(t *testing.T) {
 		WhiteBorder:     true,
 	}
 	postJson400(qrReq, t)
+}
+
+func TestEncode_EmptyText(t *testing.T) {
+	qrReq := text2qrcode.QRCodeRequest{
+		Text:            "",
+		ErrorCorrection: 1,
+		Size:            250,
+		WhiteBorder:     true,
+	}
+	postJson400(qrReq, t)
+}
+
+func TestEncode_InvalidJson(t *testing.T) {
+	httpClient := &http.Client{}
+	req, err := httpClient.Post(TestURL+"/api/text2qrcode/encode", "application/json", bytes.NewReader([]byte("")))
+	if err != nil {
+		t.Error("HTTP Post failed", err)
+	}
+
+	if req.StatusCode != http.StatusBadRequest {
+		t.Error("Status Code is not 400, but", req.StatusCode)
+	}
+}
+
+func TestHealthcheck_OK(t *testing.T) {
+	httpClient := &http.Client{}
+	_, err := httpClient.Get(TestURL + "/api/healthcheck")
+	if err != nil {
+		t.Error("Healthcheck failed")
+	}
 }

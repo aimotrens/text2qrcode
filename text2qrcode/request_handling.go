@@ -9,7 +9,7 @@ import (
 )
 
 // Convert HTML to PDF
-// @Summary Kodiert den übergebenen Text in einen QR-Code mit 500x500px und ECL=M
+// @Summary Kodiert den übergebenen Text in einen QR-Code. Die Parameter werden als Query-Parameter übergeben.
 // @Param text query string true "Text"
 // @Param errorCorrection query int false "ErrorCorrection" default(1)
 // @Param size query int false "Size" default(250)
@@ -46,7 +46,7 @@ func EncodeWithQueryString(g *gin.Context) {
 }
 
 // Convert HTML to PDF
-// @Summary Kodiert den übergebenen Text mit den angegebenen Parametern in einen QR-Code
+// @Summary Kodiert den übergebenen Text in einen QR-Code. Die Parameter werden als JSON übergeben.
 // @Param request body QRCodeRequest true "qrcodeRequest"
 // @Accept aplication/json
 // @Produce  image/png

@@ -8,6 +8,7 @@ import (
 	"github.com/skip2/go-qrcode"
 )
 
+// @Tags Text2QRCode
 // Convert HTML to PDF
 // @Summary Kodiert den übergebenen Text in einen QR-Code. Die Parameter werden als Query-Parameter übergeben.
 // @Param text query string true "Text"
@@ -45,7 +46,7 @@ func EncodeWithQueryString(g *gin.Context) {
 	})
 }
 
-// Convert HTML to PDF
+// @Tags Text2QRCode
 // @Summary Kodiert den übergebenen Text in einen QR-Code. Die Parameter werden als JSON übergeben.
 // @Param request body QRCodeRequest true "qrcodeRequest"
 // @Accept aplication/json
@@ -85,13 +86,4 @@ func encode(g *gin.Context, qrReq QRCodeRequest) {
 	}
 
 	g.Data(http.StatusOK, "image/png", png)
-}
-
-// Healthcheck
-// @Summary Gibt immer "OK" zurück
-// @Produce  text/plain
-// @Success 200 {string} OK
-// @Router /healthcheck [get]
-func HealthCheck(g *gin.Context) {
-	g.String(http.StatusOK, "OK")
 }

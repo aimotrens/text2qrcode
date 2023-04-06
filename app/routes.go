@@ -1,14 +1,18 @@
-package text2qrcode
+package app
 
 import (
 	"net/http"
 
+	"github.com/aimotrens/text2qrcode/app/healthcheck"
+	"github.com/aimotrens/text2qrcode/app/text2qrcode"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func SetRoutes(r *gin.Engine) {
+func Setup() *gin.Engine {
+	r := gin.Default()
+
 	// Error Handling, Ausgabe der Fehler als JSON an den Client
 	r.Use(func(c *gin.Context) {
 		c.Next()
@@ -29,11 +33,17 @@ func SetRoutes(r *gin.Engine) {
 
 	api := r.Group("/api")
 	{
-		api.GET("/healthcheck", HealthCheck)
+		hc := api.Group("/healthcheck")
+		{
+			hc.GET("/", healthcheck.HealthCheck)
+		}
+
 		t2q := api.Group("/text2qrcode")
 		{
-			t2q.GET("/encode", EncodeWithQueryString)
-			t2q.POST("/encode", Encode)
+			t2q.GET("/encode", text2qrcode.EncodeWithQueryString)
+			t2q.POST("/encode", text2qrcode.Encode)
 		}
 	}
+
+	return r
 }

@@ -1,7 +1,7 @@
-FROM golang:1.20 as builder
+FROM golang:1.21 as builder
 WORKDIR /build
 
-RUN go install github.com/swaggo/swag/cmd/swag@v1.8.12
+RUN go install github.com/swaggo/swag/cmd/swag@v1.16.2
 
 ADD go.mod .
 ADD go.mod .

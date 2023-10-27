@@ -15,4 +15,4 @@ Es gibt je einen Endpunkt, der per GET oder per POST angesprochen werden kann un
 |text|Der zu kodierende Text|
 |errorCorrection|Der Fehlerkorrekturlevel (0-3)<br/>0 = L<br/>1 = M<br/>2 = Q<br/>3 = H|
 |size|Die Größe des QR-Codes in Pixel|
-|whiteBorder|Gibt an, ob ein Rand um den QR-Code gezeichnet werden soll|
+|whiteBorder|Gibt an, ob ein weißer Rand um den QR-Code gezeichnet werden soll|

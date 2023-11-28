@@ -36,7 +36,7 @@ jobs:
       - id: vars
         run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
-      - uses: docker/login-action@v2
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.REG_USER }}
           password: ${{ secrets.REG_PASS }}

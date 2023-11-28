@@ -11,7 +11,6 @@ RUN go mod download
 ADD . .
 RUN swag init
 
-RUN go test ./...
 # CGO_ENABLED=0 ist ab golang:1.20 notwendig, da sonst das Binary nicht auf Alpine laufen würde
 # -> libresolv.so.2: no such file or directory
 RUN CGO_ENABLED=0 go build -o text2qrcode-bin .

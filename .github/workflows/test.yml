@@ -1,0 +1,25 @@
+name: build
+
+on:
+  schedule:
+    - cron: "0 22 * * 1"
+  push:
+    branches:
+      - main
+      - feature/*
+      - hotfix/*
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.21
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tests ausführen
+        run: |
+          go install github.com/swaggo/swag/cmd/swag@v1.16.2
+          go mod download
+          swag init
+          go test ./...

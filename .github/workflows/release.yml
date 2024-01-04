@@ -6,7 +6,23 @@ on:
       - main
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+        image: golang:1.21@sha256:672a2286da3ee7a854c3e0a56e0838918d0dbb1c18652992930293312de898a6
+    steps:
+    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+    - name: Tests ausführen
+      run: |
+        go install github.com/swaggo/swag/cmd/swag@v1.16.2
+        go mod download
+        swag init
+        go test ./...
+
+# ---
+
   tag-next-version:
+    needs: test
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_next_version.outputs.version }}
@@ -29,25 +45,10 @@ jobs:
         git tag ${{ steps.get_next_version.outputs.version }}
         git push origin ${{ steps.get_next_version.outputs.version }}
 
-# ---
-
-  test:
-    needs: tag-next-version
-    if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
-    runs-on: ubuntu-latest
-    container:
-        image: golang:1.21@sha256:672a2286da3ee7a854c3e0a56e0838918d0dbb1c18652992930293312de898a6
-    steps:
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-    - name: Tests ausführen
-      run: |
-        go install github.com/swaggo/swag/cmd/swag@v1.16.2
-        go mod download
-        swag init
-        go test ./...
 
   build-gh-release:
-    needs: test
+    needs: tag-next-version
+    if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -91,8 +92,10 @@ jobs:
         artifacts: "release/assets/*"
         tag: ${{ steps.vars.outputs.tag }}
 
+        
   build-docker:
-    needs: test
+    needs: tag-next-version
+    if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4

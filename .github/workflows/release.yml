@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-        image: golang:1.21@sha256:8c534891d1a78032d14ea78a42f012cf6f69508fd490bbffe0cce178f657e731
+        image: golang:1.21@sha256:5878982b4a4dd01b2af5077f043c3c0bbf6353ba020792493ed139fc093edd48
     steps:
     - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
     - name: Tests ausführen

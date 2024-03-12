@@ -1,4 +1,4 @@
-FROM golang:1.22@sha256:34ce21a9696a017249614876638ea37ceca13cdd88f582caad06f87a8aa45bf3 as builder
+FROM golang:1.22@sha256:6a02cc10cb339f7fdb0feace29e0db457f0b84641cd030a3ada30964390af625 as builder
 WORKDIR /build
 
 RUN go install github.com/swaggo/swag/cmd/swag@v1.16.2

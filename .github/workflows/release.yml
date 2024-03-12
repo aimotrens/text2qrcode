@@ -11,7 +11,7 @@ jobs:
     container:
         image: golang:1.22@sha256:34ce21a9696a017249614876638ea37ceca13cdd88f582caad06f87a8aa45bf3
     steps:
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
     - name: Tests ausführen
       run: |
         go install github.com/swaggo/swag/cmd/swag@v1.16.2
@@ -31,7 +31,7 @@ jobs:
       contents: write
     steps:
     - name: Checkout
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
       with:
         fetch-depth: '0'
     - name: Get next version
@@ -53,7 +53,7 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+    - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
     - name: go vorbereiten
       uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
       with:
@@ -98,7 +98,7 @@ jobs:
     if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest    
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: actions/checkout@9bb56186c3b09b4f86b1c65136769dd318469633 # v4
       - uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3
       - uses: docker/setup-buildx-action@0d103c3126aa41d772a8362f6aa67afac040f80c # v3
 

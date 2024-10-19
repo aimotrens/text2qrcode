@@ -1,7 +1,7 @@
-FROM golang:1.23@sha256:cc637ce72c1db9586bd461cc5882df5a1c06232fd5dfe211d3b32f79c5a999fc as builder
+FROM golang:1.23@sha256:cc637ce72c1db9586bd461cc5882df5a1c06232fd5dfe211d3b32f79c5a999fc AS builder
 WORKDIR /build
 
-RUN go install github.com/swaggo/swag/cmd/swag@v1.16.2
+RUN go install github.com/swaggo/swag/cmd/swag@v1.16.4
 
 ADD go.mod .
 ADD go.mod .

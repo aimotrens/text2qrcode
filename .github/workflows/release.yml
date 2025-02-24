@@ -9,7 +9,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-        image: golang:1.23@sha256:77a21b3e354c03e9f66b13bc39f4f0db8085c70f8414406af66b29c6d6c4dd85
+        image: golang:1.24@sha256:2b1cbf278ce05a2a310a3d695ebb176420117a8cfcfcc4e5e68a1bef5f6354da
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
     - name: Tests ausführen
@@ -57,7 +57,7 @@ jobs:
     - name: go vorbereiten
       uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
       with:
-        go-version: '1.21.5'
+        go-version: '1.24.0'
     - name: Vars setzen
       id: vars
       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT

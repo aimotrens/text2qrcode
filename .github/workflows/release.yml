@@ -7,6 +7,8 @@ on:
 
 jobs:
   test:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     container:
         image: golang:1.24@sha256:db5d0afbfb4ab648af2393b92e87eaae9ad5e01132803d80caef91b5752d289c
@@ -22,13 +24,13 @@ jobs:
 # ---
 
   tag-next-version:
+    permissions:
+      contents: write
     needs: test
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_next_version.outputs.version }}
       hasNextVersion: ${{ steps.get_next_version.outputs.hasNextVersion }}
-    permissions:
-      contents: write
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -47,11 +49,11 @@ jobs:
 
 
   build-gh-release:
+    permissions:
+      contents: write
     needs: tag-next-version
     if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
     - name: go vorbereiten
@@ -94,6 +96,8 @@ jobs:
 
         
   build-docker:
+    permissions:
+      contents: read
     needs: tag-next-version
     if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest    

@@ -59,7 +59,7 @@ jobs:
     - name: go vorbereiten
       uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
       with:
-        go-version: '1.25.0'
+        go-version: '1.25.1'
     - name: Vars setzen
       id: vars
       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT

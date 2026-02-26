@@ -13,7 +13,7 @@ jobs:
       contents: read
     runs-on: ubuntu-latest
     container:
-      image: golang:1.26@sha256:b75179794e029c128d4496f695325a4c23b29986574ad13dd52a0d3ee9f72a6f
+      image: golang:1.26@sha256:9edf71320ef8a791c4c33ec79f90496d641f306a91fb112d3d060d5c1cee4e20
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Tests ausführen

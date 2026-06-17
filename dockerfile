@@ -17,7 +17,7 @@ RUN CGO_ENABLED=0 go build -o text2qrcode-bin .
 
 # ---
 
-FROM alpine:latest@sha256:f5064d3e5f88c467c714509f491853ab2d951932c5cad699c0cb969dcec6f3b4
+FROM alpine:latest@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
 
 # Kann deaktiviert werden, da das Binary mit CGO_ENABLED=0 kompiliert wurde
 #RUN apk add libc6-compat tzdata

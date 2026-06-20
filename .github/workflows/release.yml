@@ -38,7 +38,7 @@ jobs:
         fetch-depth: '0'
     - name: Get next version
       id: get_next_version
-      uses: thenativeweb/get-next-version@d4f1ab72a6680de8a78fbf6218a9dd1193ce57b9 # main
+      uses: thenativeweb/get-next-version@0cfafef003741641ee52a2a37fdfc27ce5e857f5 # main
       with:
         prefix: 'v'
     - name: Create tag

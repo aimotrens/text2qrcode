@@ -15,7 +15,7 @@ jobs:
     container:
       image: golang:1.26@sha256:ae5a2316d12f3e78fd99177dad452e6ad4f240af2d71d57b480c3477f250fec6
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Tests ausführen
         run: |
           go install github.com/swaggo/swag/cmd/swag@v1.16.2

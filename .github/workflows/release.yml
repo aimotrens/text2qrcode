@@ -13,7 +13,7 @@ jobs:
     container:
         image: golang:1.26@sha256:3aff6657219a4d9c14e27fb1d8976c49c29fddb70ba835014f477e1c70636647
     steps:
-    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
     - name: Tests ausführen
       run: |
         go install github.com/swaggo/swag/cmd/swag@v1.16.2
@@ -33,7 +33,7 @@ jobs:
       hasNextVersion: ${{ steps.get_next_version.outputs.hasNextVersion }}
     steps:
     - name: Checkout
-      uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       with:
         fetch-depth: '0'
     - name: Get next version
@@ -55,7 +55,7 @@ jobs:
     if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
     - name: go vorbereiten
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
       with:
@@ -102,7 +102,7 @@ jobs:
     if: ${{ needs.tag-next-version.outputs.hasNextVersion == 'true' }}
     runs-on: ubuntu-latest    
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8 # v4
       - uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4
 

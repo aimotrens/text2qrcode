@@ -3,7 +3,7 @@ package text2qrcode_test
 import (
 	"testing"
 
-	"github.com/aimotrens/text2qrcode/app/text2qrcode"
+	"github.com/aimotrens/text2qrcode/internal/text2qrcode"
 	"github.com/aimotrens/text2qrcode/testing/test_utils"
 )
 

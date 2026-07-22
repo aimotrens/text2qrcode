@@ -9,8 +9,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/aimotrens/text2qrcode/app"
-	"github.com/aimotrens/text2qrcode/app/text2qrcode"
+	"github.com/aimotrens/text2qrcode/internal"
+	"github.com/aimotrens/text2qrcode/internal/text2qrcode"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -36,11 +36,11 @@ func postJsonRequest(url string, qrReq text2qrcode.QRCodeRequest, t *testing.T, 
 }
 
 func postJsonRawRequest(url string, data []byte, t *testing.T, expectedStatus int) {
-	r := app.Setup()
+	mux := internal.Setup()
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest(http.MethodPost, url, nil)
 	req.Body = io.NopCloser(bytes.NewReader(data))
-	r.ServeHTTP(w, req)
+	mux.ServeHTTP(w, req)
 
 	assert.Equal(t, expectedStatus, w.Code)
 	f := w.Body.String()
@@ -52,15 +52,19 @@ func Get200(url string, t *testing.T) {
 	getRequest(url, t, http.StatusOK)
 }
 
+func Get307(url string, t *testing.T) {
+	getRequest(url, t, http.StatusTemporaryRedirect)
+}
+
 func Get400(url string, t *testing.T) {
 	getRequest(url, t, http.StatusBadRequest)
 }
 
 func getRequest(url string, t *testing.T, expectedStatus int) {
-	r := app.Setup()
+	mux := internal.Setup()
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest(http.MethodGet, url, nil)
-	r.ServeHTTP(w, req)
+	req := httptest.NewRequest(http.MethodGet, url, nil)
+	mux.ServeHTTP(w, req)
 
 	assert.Equal(t, expectedStatus, w.Code)
 }

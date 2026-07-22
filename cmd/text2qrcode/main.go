@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 
-	"github.com/aimotrens/text2qrcode/app"
 	_ "github.com/aimotrens/text2qrcode/docs"
+	"github.com/aimotrens/text2qrcode/internal"
 )
 
 // @title Text2QRCode / QR-Code Generator API
@@ -13,10 +14,12 @@ import (
 
 // @contact.name aimotrens
 // @contact.url https://github.com/aimotrens/text2qrcode
-
 func main() {
-	r := app.Setup()
+	mux := internal.Setup()
 
 	fmt.Println("Text2QRCode gestartet.")
-	r.Run(":8080")
+	err := http.ListenAndServe(":8080", mux)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

@@ -16,9 +16,9 @@ jobs:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
     - name: Tests ausführen
       run: |
-        go install github.com/swaggo/swag/cmd/swag@v1.16.2
+        go install github.com/swaggo/swag/cmd/swag@v1.16.6
         go mod download
-        swag init
+        swag init -g ./cmd/text2qrcode/main.go
         go test ./...
 
 # ---
@@ -66,26 +66,26 @@ jobs:
     - name: Build
       run: |
         mkdir -p release/assets
-        go install github.com/swaggo/swag/cmd/swag@v1.16.2
+        go install github.com/swaggo/swag/cmd/swag@v1.16.6
         go mod download
-        swag init
+        swag init -g ./cmd/text2qrcode/main.go
         
-        GOOS=linux GOARCH=amd64 go build -o release/text2qrcode-linux-amd64
+        GOOS=linux GOARCH=amd64 go build -o release/text2qrcode-linux-amd64 ./cmd/text2qrcode
         tar cvfJ release/assets/text2qrcode-linux-amd64.tar.xz release/text2qrcode-linux-amd64
 
-        GOOS=linux GOARCH=arm64 go build -o release/text2qrcode-linux-arm64
+        GOOS=linux GOARCH=arm64 go build -o release/text2qrcode-linux-arm64 ./cmd/text2qrcode
         tar cvfJ release/assets/text2qrcode-linux-arm64.tar.xz release/text2qrcode-linux-arm64
 
-        GOOS=windows GOARCH=amd64 go build -o release/text2qrcode-windows-amd64.exe
+        GOOS=windows GOARCH=amd64 go build -o release/text2qrcode-windows-amd64.exe ./cmd/text2qrcode
         zip release/assets/text2qrcode-windows-amd64.zip release/text2qrcode-windows-amd64.exe
 
-        GOOS=windows GOARCH=arm64 go build -o release/text2qrcode-windows-arm64.exe
+        GOOS=windows GOARCH=arm64 go build -o release/text2qrcode-windows-arm64.exe ./cmd/text2qrcode
         zip release/assets/text2qrcode-windows-arm64.zip release/text2qrcode-windows-arm64.exe
 
-        GOOS=darwin GOARCH=amd64 go build -o release/text2qrcode-darwin-amd64
+        GOOS=darwin GOARCH=amd64 go build -o release/text2qrcode-darwin-amd64 ./cmd/text2qrcode
         tar cvfJ release/assets/text2qrcode-darwin-amd64.tar.xz release/text2qrcode-darwin-amd64
 
-        GOOS=darwin GOARCH=arm64 go build -o release/text2qrcode-darwin-arm64
+        GOOS=darwin GOARCH=arm64 go build -o release/text2qrcode-darwin-arm64 ./cmd/text2qrcode
         tar cvfJ release/assets/text2qrcode-darwin-arm64.tar.xz release/text2qrcode-darwin-arm64
 
     - name: Github-Release erstellen

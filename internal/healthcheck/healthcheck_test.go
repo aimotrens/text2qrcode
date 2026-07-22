@@ -7,5 +7,5 @@ import (
 )
 
 func TestHealthcheck_OK(t *testing.T) {
-	test_utils.Get200("/api/healthcheck/", t)
+	test_utils.Get200("/api/healthcheck", t)
 }

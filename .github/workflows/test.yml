@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Tests ausführen
         run: |
-          go install github.com/swaggo/swag/cmd/swag@v1.16.2
+          go install github.com/swaggo/swag/cmd/swag@v1.16.6
           go mod download
-          swag init
+          swag init -g ./cmd/text2qrcode/main.go
           go test ./...

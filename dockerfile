@@ -1,19 +1,19 @@
 FROM golang:1.26@sha256:3aff6657219a4d9c14e27fb1d8976c49c29fddb70ba835014f477e1c70636647 AS builder
 WORKDIR /build
 
-RUN go install github.com/swaggo/swag/cmd/swag@v1.16.4
+RUN go install github.com/swaggo/swag/cmd/swag@v1.16.6
 
 ADD go.mod .
-ADD go.mod .
+ADD go.sum .
 
 RUN go mod download
 
 ADD . .
-RUN swag init
+RUN swag init -g ./cmd/text2qrcode/main.go
 
 # CGO_ENABLED=0 ist ab golang:1.20 notwendig, da sonst das Binary nicht auf Alpine laufen würde
 # -> libresolv.so.2: no such file or directory
-RUN CGO_ENABLED=0 go build -o text2qrcode-bin .
+RUN CGO_ENABLED=0 go build -o text2qrcode-bin ./cmd/text2qrcode
 
 # ---
 
